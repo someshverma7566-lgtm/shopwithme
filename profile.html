@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>ShopWithMe | My Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+    <script>document.documentElement.style.fontFamily='Inter,system-ui,sans-serif';</script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0056c3",
+                        "primary-container": "#1f6feb",
+                        "on-primary-container": "#fefcff",
+                        "primary-fixed": "#d9e2ff",
+                        "secondary": "#8a5100",
+                        "secondary-container": "#fe9800",
+                        "on-secondary-container": "#643900",
+                        "surface": "#f7f9fc",
+                        "surface-variant": "#e0e3e6",
+                        "on-surface": "#191c1e",
+                        "on-surface-variant": "#424754",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f4f7",
+                        "surface-container": "#eceef1",
+                        "surface-container-high": "#e6e8eb",
+                        "surface-container-highest": "#e0e3e6",
+                        "outline": "#727786",
+                        "outline-variant": "#c2c6d6",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+    <style>
+        body { min-height: 100vh; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-header { background: rgba(255, 255, 255, 0.8); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface flex flex-col min-h-screen">
+    <!-- TopNavBar -->
+    <header class="fixed top-0 w-full z-50 glass-header shadow-md shadow-slate-200/50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-8">
+            <!-- Brand -->
+            <a href="index.html" class="flex items-center hover:opacity-80 transition-opacity" title="Back to Home">
+                <span class="text-2xl font-black tracking-tight text-blue-700">ShopWithMe</span>
+            </a>
+            
+            <!-- Navigation Links -->
+            <nav class="hidden lg:flex flex-1 justify-center items-center gap-8">
+                <a class="text-slate-600 font-medium hover:text-blue-600 transition-colors" href="products.html">Categories</a>
+                <a class="text-slate-600 font-medium hover:text-blue-600 transition-colors" href="products.html?deals=true">Deals</a>
+            </nav>
+            
+            <!-- Actions -->
+            <div class="flex items-center gap-5">
+                <button class="relative group" onclick="App.showToast('Wishlist feature coming soon!', 'info')">
+                    <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">favorite</span>
+                </button>
+                <button class="relative group" onclick="App.showToast('No new notifications.', 'info')">
+                    <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">notifications</span>
+                </button>
+                <button class="relative group flex items-center gap-1" onclick="window.location.href='cart.html'">
+                    <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">shopping_cart</span>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 w-4 h-4 bg-secondary-container text-[10px] flex items-center justify-center rounded-full text-on-secondary-container font-bold hidden">0</span>
+                    <span class="hidden md:block text-sm font-semibold text-on-surface-variant">Cart</span>
+                </button>
+                <button id="navbar-login-btn" class="flex items-center gap-2 bg-surface-container-high p-1.5 pr-4 rounded-full hover:bg-surface-container-highest transition-colors">
+                    <div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-sm [font-variation-settings:'FILL'_1]">person</span>
+                    </div>
+                    <span class="text-sm font-bold text-on-surface">Login</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-[120px] pb-24 px-6 max-w-3xl mx-auto flex-1 w-full" id="profile-container">
+        <!-- Content will be injected by app.js. A loading state is shown by default. -->
+        <div class="flex flex-col items-center justify-center h-64">
+            <span class="material-symbols-outlined text-4xl text-outline mb-4 animate-spin">refresh</span>
+            <p class="text-on-surface-variant font-medium">Loading profile...</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-12 px-6 border-t border-slate-200 bg-slate-50 mt-auto">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-slate-500 text-xs">© 2024 ShopWithMe. The Digital Curator.</p>
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-2 grayscale opacity-50">
+                    <span class="material-symbols-outlined text-sm">payments</span>
+                    <span class="material-symbols-outlined text-sm">credit_card</span>
+                    <span class="material-symbols-outlined text-sm">account_balance_wallet</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/db.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

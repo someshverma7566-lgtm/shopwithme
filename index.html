@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ShopWithMe | The Digital Curator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;700;800&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet" />
+    <script>document.documentElement.style.fontFamily = 'Inter,system-ui,sans-serif';</script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#693c00",
+                        "primary-fixed-dim": "#afc6ff",
+                        "surface-dim": "#d8dadd",
+                        "background": "#f7f9fc",
+                        "on-tertiary-container": "#fffbff",
+                        "surface": "#f7f9fc",
+                        "outline": "#727786",
+                        "surface-tint": "#0059c8",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#341100",
+                        "on-secondary-fixed": "#2c1600",
+                        "on-primary-fixed": "#001944",
+                        "surface-container-high": "#e6e8eb",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c2c6d6",
+                        "secondary-container": "#fe9800",
+                        "surface-bright": "#f7f9fc",
+                        "secondary-fixed": "#ffdcbd",
+                        "primary": "#0056c3",
+                        "secondary-fixed-dim": "#ffb86f",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e0e3e6",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#643900",
+                        "primary-container": "#1f6feb",
+                        "inverse-on-surface": "#eff1f4",
+                        "inverse-surface": "#2d3133",
+                        "inverse-primary": "#afc6ff",
+                        "on-primary-container": "#fefcff",
+                        "on-background": "#191c1e",
+                        "surface-container-highest": "#e0e3e6",
+                        "surface-container-low": "#f2f4f7",
+                        "tertiary-fixed": "#ffdbcb",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "tertiary": "#9a4100",
+                        "on-tertiary-fixed-variant": "#783100",
+                        "surface-container": "#eceef1",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#c15300",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#d9e2ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed-variant": "#004299",
+                        "on-surface-variant": "#424754",
+                        "secondary": "#8a5100"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Anti-FOUC: hide page until Tailwind has processed styles */
+        html {
+            visibility: hidden;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+            /* Chrome < 121, Safari, iOS Safari, Samsung Internet */
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            /* IE/Edge */
+            scrollbar-width: none;
+            /* Firefox & Chrome 121+ */
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #0056c3 0%, #1f6feb 100%);
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.8);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+    <script>
+        /* Reveal page after Tailwind is done — eliminates the unstyled flash */
+        document.addEventListener('DOMContentLoaded', function () {
+            requestAnimationFrame(function () {
+                document.documentElement.style.visibility = 'visible';
+            });
+        });
+    </script>
+</head>
+
+<body class="bg-surface font-body text-on-surface">
+    <!-- TopNavBar -->
+    <header class="fixed top-0 w-full z-50 glass-header shadow-xl shadow-slate-200/50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-8">
+            <!-- Brand -->
+            <a href="index.html" class="flex items-center hover:opacity-80 transition-opacity" title="Back to Home">
+                <span class="text-2xl font-black tracking-tight text-blue-700">ShopWithMe</span>
+            </a>
+            <!-- Search Bar (Injected Command: search_bar: on_right) -->
+            <div class="hidden md:flex flex-1 max-w-xl relative">
+                <input title="Input field"
+                    class="w-full h-11 bg-surface-container-high border-none rounded-lg px-12 text-sm focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all"
+                    placeholder="Search for products, brands and more" type="text" onkeyup="App.handleSearch(event)" />
+                <span class="material-symbols-outlined absolute left-4 top-2.5 text-outline">search</span>
+            </div>
+            <!-- Navigation Links -->
+            <nav class="hidden lg:flex items-center gap-8">
+                <a class="text-blue-700 font-bold border-b-2 border-blue-700 transition-colors"
+                    href="products.html">Categories</a>
+                <a class="text-slate-600 font-medium hover:text-blue-600 transition-colors"
+                    href="products.html?deals=true">Deals</a>
+                <a class="text-slate-600 font-medium hover:text-blue-600 transition-colors" href="#"
+                    onclick="App.goToAdmin(event)">Admin</a>
+            </nav>
+            <!-- Actions -->
+            <div class="flex items-center gap-5">
+                <button class="relative group" onclick="App.showToast('Wishlist feature coming soon!', 'info')">
+                    <span
+                        class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">favorite</span>
+                </button>
+                <button class="relative group" onclick="App.showToast('No new notifications.', 'info')">
+                    <span
+                        class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">notifications</span>
+                    <span
+                        class="absolute -top-1 -right-1 w-4 h-4 bg-secondary-container text-[10px] flex items-center justify-center rounded-full text-on-secondary-container font-bold">2</span>
+                </button>
+                <button class="relative group flex items-center gap-1" onclick="window.location.href='cart.html'">
+                    <span
+                        class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">shopping_cart</span>
+                    <span id="cart-badge"
+                        class="absolute -top-1 -right-1 w-4 h-4 bg-secondary-container text-[10px] flex items-center justify-center rounded-full text-on-secondary-container font-bold hidden">0</span>
+                    <span class="hidden md:block text-sm font-semibold text-on-surface-variant">Cart</span>
+                </button>
+                <button id="navbar-login-btn"
+                    class="flex items-center gap-2 bg-surface-container-high p-1.5 pr-4 rounded-full hover:bg-surface-container-highest transition-colors opacity-0">
+                    <div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center">
+                        <span
+                            class="material-symbols-outlined text-primary text-sm [font-variation-settings:'FILL'_1]">person</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section class="mt-6 px-6 max-w-7xl mx-auto">
+            <div class="hero-gradient h-[480px] rounded-xl relative overflow-hidden flex items-center">
+                <div class="absolute inset-0 bg-black/10"></div>
+                <div class="relative z-10 px-12 md:px-24 max-w-3xl">
+                    <span class="text-white/80 font-bold tracking-widest uppercase text-sm mb-4 block">Limited Time
+                        Offer</span>
+                    <h1 class="font-headline text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">Elevate
+                        Your Lifestyle.</h1>
+                    <p class="text-white/90 text-lg md:text-xl mb-10 font-body max-w-xl">Curated premium electronics and
+                        fashion essentials, delivered to your doorstep with unmatched care.</p>
+                    <div class="flex gap-4">
+                        <a href="products.html"
+                            class="inline-flex items-center justify-center bg-secondary-container text-on-secondary-container px-10 py-4 rounded-lg font-bold text-lg hover:scale-105 transition-transform shadow-lg cursor-pointer">Shop
+                            Now</a>
+                        <a href="products.html?deals=true"
+                            class="inline-flex items-center justify-center bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 py-4 rounded-lg font-bold text-lg hover:bg-white/20 transition-colors cursor-pointer">View
+                            Deals</a>
+                    </div>
+                </div>
+                <!-- Decorative Product Overlay -->
+                <div
+                    class="hidden lg:block absolute right-[-5%] top-1/2 -translate-y-1/2 w-[600px] h-[600px] pointer-events-none">
+                    <img alt="Premium Headphones" class="w-full h-full object-contain drop-shadow-2xl rotate-[-12deg]"
+                        src="image.png" />
+                </div>
+            </div>
+        </section>
+        <!-- Categories Section -->
+        <section class="py-16 px-6 max-w-7xl mx-auto overflow-hidden">
+            <div class="flex items-end justify-between mb-10">
+                <div>
+                    <h2 class="font-headline text-3xl font-extrabold text-on-surface">Shop by Category</h2>
+                    <p class="text-on-surface-variant mt-1">Discover our wide range of premium collections.</p>
+                </div>
+                <button onclick="window.location.href='products.html'"
+                    class="text-primary font-bold flex items-center gap-1 hover:gap-2 transition-all">
+                    View All Categories <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
+            </div>
+            <div class="flex overflow-x-auto hide-scrollbar gap-10 pb-4">
+                <div class="flex-shrink-0 group cursor-pointer text-center"
+                    onclick="window.location.href='products.html?category=Fashion'">
+                    <div
+                        class="w-32 h-32 rounded-full bg-surface-container-low mb-4 flex items-center justify-center overflow-hidden group-hover:shadow-xl group-hover:shadow-primary/10 transition-all">
+                        <img class="w-20 h-20 object-contain group-hover:scale-110 transition-transform" alt="Fashion"
+                            src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&q=90" />
+                    </div>
+                    <span class="font-bold text-on-surface group-hover:text-primary transition-colors">Fashion</span>
+                </div>
+                <div class="flex-shrink-0 group cursor-pointer text-center"
+                    onclick="window.location.href='products.html?category=Electronics'">
+                    <div
+                        class="w-32 h-32 rounded-full bg-surface-container-low mb-4 flex items-center justify-center overflow-hidden group-hover:shadow-xl group-hover:shadow-primary/10 transition-all">
+                        <img class="w-20 h-20 object-contain group-hover:scale-110 transition-transform"
+                            alt="Electronics"
+                            src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=200&q=90" />
+                    </div>
+                    <span
+                        class="font-bold text-on-surface group-hover:text-primary transition-colors">Electronics</span>
+                </div>
+                <div class="flex-shrink-0 group cursor-pointer text-center"
+                    onclick="window.location.href='products.html?category=Gadgets'">
+                    <div
+                        class="w-32 h-32 rounded-full bg-surface-container-low mb-4 flex items-center justify-center overflow-hidden group-hover:shadow-xl group-hover:shadow-primary/10 transition-all">
+                        <img class="w-20 h-20 object-contain group-hover:scale-110 transition-transform" alt="Gadgets"
+                            src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&q=90" />
+                    </div>
+                    <span class="font-bold text-on-surface group-hover:text-primary transition-colors">Gadgets</span>
+                </div>
+                <div class="flex-shrink-0 group cursor-pointer text-center"
+                    onclick="window.location.href='products.html?category=Home'">
+                    <div
+                        class="w-32 h-32 rounded-full bg-surface-container-low mb-4 flex items-center justify-center overflow-hidden group-hover:shadow-xl group-hover:shadow-primary/10 transition-all">
+                        <img class="w-20 h-20 object-contain group-hover:scale-110 transition-transform" alt="Home"
+                            src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=200&q=90" />
+                    </div>
+                    <span class="font-bold text-on-surface group-hover:text-primary transition-colors">Home</span>
+                </div>
+                <div class="flex-shrink-0 group cursor-pointer text-center"
+                    onclick="window.location.href='products.html?category=Grocery'">
+                    <div
+                        class="w-32 h-32 rounded-full bg-surface-container-low mb-4 flex items-center justify-center overflow-hidden group-hover:shadow-xl group-hover:shadow-primary/10 transition-all">
+                        <img class="w-20 h-20 object-contain group-hover:scale-110 transition-transform" alt="Grocery"
+                            src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&q=90" />
+                    </div>
+                    <span class="font-bold text-on-surface group-hover:text-primary transition-colors">Grocery</span>
+                </div>
+                <div class="flex-shrink-0 group cursor-pointer text-center"
+                    onclick="window.location.href='products.html?category=Accessories'">
+                    <div
+                        class="w-32 h-32 rounded-full bg-surface-container-low mb-4 flex items-center justify-center overflow-hidden group-hover:shadow-xl group-hover:shadow-primary/10 transition-all">
+                        <img class="w-20 h-20 object-contain group-hover:scale-110 transition-transform"
+                            alt="Accessories"
+                            src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=200&q=90" />
+                    </div>
+                    <span
+                        class="font-bold text-on-surface group-hover:text-primary transition-colors">Accessories</span>
+                </div>
+                <div class="flex-shrink-0 group cursor-pointer text-center"
+                    onclick="window.location.href='products.html?category=Beauty'">
+                    <div
+                        class="w-32 h-32 rounded-full bg-surface-container-low mb-4 flex items-center justify-center overflow-hidden group-hover:shadow-xl group-hover:shadow-primary/10 transition-all">
+                        <img class="w-20 h-20 object-contain group-hover:scale-110 transition-transform" alt="Beauty"
+                            src="https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200&q=90" />
+                    </div>
+                    <span class="font-bold text-on-surface group-hover:text-primary transition-colors">Beauty</span>
+                </div>
+            </div>
+        </section>
+        <!-- Featured Products Section -->
+        <section class="bg-surface-container-low py-20">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex items-center justify-between mb-12">
+                    <h2 class="font-headline text-3xl font-extrabold text-on-surface">Curated Picks For You</h2>
+                    <div class="flex gap-2">
+                        <button
+                            class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-white hover:border-primary transition-all">
+                            <span class="material-symbols-outlined text-sm">chevron_left</span>
+                        </button>
+                        <button
+                            class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-white hover:border-primary transition-all">
+                            <span class="material-symbols-outlined text-sm">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="featured-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Products loaded dynamically from database by app.js -->
+                </div>
+            </div>
+        </section>
+        <!-- Newsletter / Bento Banner -->
+        <section class="py-20 px-6 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div
+                    class="lg:col-span-2 bg-primary rounded-3xl p-12 text-white flex flex-col justify-between relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h2 class="font-headline text-4xl font-extrabold mb-6">Join the Inner Circle</h2>
+                        <p class="text-white/80 max-w-md text-lg mb-8">Get early access to drops, exclusive discounts,
+                            and personal styling tips delivered to your inbox.</p>
+                        <div class="flex gap-4 max-w-md">
+                            <input title="Input field"
+                                class="flex-1 bg-white/10 border-white/20 rounded-lg px-6 py-4 focus:ring-2 focus:ring-white focus:bg-white/20 transition-all placeholder:text-white/50"
+                                placeholder="Your email address" type="email" />
+                            <button
+                                class="bg-white text-primary font-bold px-8 py-4 rounded-lg hover:bg-white/90 transition-colors">Sign
+                                Up</button>
+                        </div>
+                    </div>
+                    <div class="absolute right-0 bottom-0 opacity-20 pointer-events-none">
+                        <span
+                            class="material-symbols-outlined text-[300px] [font-variation-settings:'wght'_700]">mail</span>
+                    </div>
+                </div>
+                <div
+                    class="bg-secondary-container rounded-3xl p-10 flex flex-col justify-center items-center text-center">
+                    <span
+                        class="material-symbols-outlined text-6xl text-on-secondary-container mb-6">local_shipping</span>
+                    <h3 class="font-headline text-2xl font-extrabold text-on-secondary-container mb-2">Priority Shipping
+                    </h3>
+                    <p class="text-on-secondary-container/80">Complimentary next-day delivery on all orders over ₹500.
+                        Standard returns extended to 60 days.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full py-12 px-6 border-t border-slate-200 bg-slate-50">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12">
+            <div class="col-span-2">
+                <a href="index.html" class="inline-block hover:opacity-80 transition-opacity"><span
+                        class="text-xl font-bold text-slate-900 mb-6 block">ShopWithMe</span></a>
+                <p class="text-slate-500 text-sm mb-6 max-w-xs">The Digital Curator for modern essentials. Excellence in
+                    every delivery, transparency in every transaction.</p>
+                <div class="flex gap-4">
+                    <a class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                        href="#">
+                        <span class="material-symbols-outlined text-lg">public</span>
+                    </a>
+                    <a class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                        href="#">
+                        <span class="material-symbols-outlined text-lg">alternate_email</span>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-headline font-bold text-slate-900 mb-6 text-sm">Company</h4>
+                <ul class="space-y-4">
+                    <li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors"
+                            href="#">About Us</a></li>
+                    <li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors"
+                            href="#">Careers</a></li>
+                    <li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors"
+                            href="#">Sustainability</a></li>
+                    <li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors"
+                            href="#">Press</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-headline font-bold text-slate-900 mb-6 text-sm">Support</h4>
+                <ul class="space-y-4">
+                    <li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors"
+                            href="#">Contact</a></li>
+                    <li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors"
+                            href="#">Shipping Info</a></li>
+                    <li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors"
+                            href="#">Returns</a></li>
+                    <li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors"
+                            href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-headline font-bold text-slate-900 mb-6 text-sm">Legal</h4>
+                <ul class="space-y-4">
+                    <li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors"
+                            href="#">Privacy Policy</a></li>
+                    <li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors"
+                            href="#">Terms of Service</a></li>
+                    <li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors"
+                            href="#">Security</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-headline font-bold text-slate-900 mb-6 text-sm">Download</h4>
+                <div class="flex flex-col gap-3">
+                    <button
+                        class="bg-slate-900 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-slate-800 transition-colors">
+                        <span class="material-symbols-outlined">smartphone</span>
+                        <div class="text-left">
+                            <p class="text-[8px] uppercase">App Store</p>
+                            <p class="text-xs font-bold leading-tight">Download</p>
+                        </div>
+                    </button>
+                    <button
+                        class="bg-slate-900 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-slate-800 transition-colors">
+                        <span class="material-symbols-outlined">ad_units</span>
+                        <div class="text-left">
+                            <p class="text-[8px] uppercase">Play Store</p>
+                            <p class="text-xs font-bold leading-tight">Get it on</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div
+            class="max-w-7xl mx-auto pt-12 mt-12 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-slate-500 text-xs">© 2026 ShopWithMe. The Digital Curator.</p>
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-2 grayscale opacity-50">
+                    <span class="material-symbols-outlined text-sm">payments</span>
+                    <span class="material-symbols-outlined text-sm">credit_card</span>
+                    <span class="material-symbols-outlined text-sm">account_balance_wallet</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="js/db.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

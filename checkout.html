@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShopWithMe | The Digital Curator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>document.documentElement.style.fontFamily='Inter,system-ui,sans-serif';</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#693c00",
+                        "primary-fixed-dim": "#afc6ff",
+                        "surface-dim": "#d8dadd",
+                        "background": "#f7f9fc",
+                        "on-tertiary-container": "#fffbff",
+                        "surface": "#f7f9fc",
+                        "outline": "#727786",
+                        "surface-tint": "#0059c8",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#341100",
+                        "on-secondary-fixed": "#2c1600",
+                        "on-primary-fixed": "#001944",
+                        "surface-container-high": "#e6e8eb",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c2c6d6",
+                        "secondary-container": "#fe9800",
+                        "surface-bright": "#f7f9fc",
+                        "secondary-fixed": "#ffdcbd",
+                        "primary": "#0056c3",
+                        "secondary-fixed-dim": "#ffb86f",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e0e3e6",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#643900",
+                        "primary-container": "#1f6feb",
+                        "inverse-on-surface": "#eff1f4",
+                        "inverse-surface": "#2d3133",
+                        "inverse-primary": "#afc6ff",
+                        "on-primary-container": "#fefcff",
+                        "on-background": "#191c1e",
+                        "surface-container-highest": "#e0e3e6",
+                        "surface-container-low": "#f2f4f7",
+                        "tertiary-fixed": "#ffdbcb",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "tertiary": "#9a4100",
+                        "on-tertiary-fixed-variant": "#783100",
+                        "surface-container": "#eceef1",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#c15300",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#d9e2ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed-variant": "#004299",
+                        "on-surface-variant": "#424754",
+                        "secondary": "#8a5100"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none; /* IE/Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0056c3 0%, #1f6feb 100%);
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.8);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 glass-header shadow-xl shadow-slate-200/50">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-8">
+<!-- Brand -->
+<a href="index.html" class="flex items-center hover:opacity-80 transition-opacity" title="Back to Home">
+<span class="text-2xl font-black tracking-tight text-blue-700">ShopWithMe</span>
+</a>
+<!-- Search Bar (Injected Command: search_bar: on_right) -->
+<div class="hidden md:flex flex-1 max-w-xl relative">
+<input title="Input field" class="w-full h-11 bg-surface-container-high border-none rounded-lg px-12 text-sm focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all" placeholder="Search for products, brands and more" type="text" onkeyup="App.handleSearch(event)"/>
+<span class="material-symbols-outlined absolute left-4 top-2.5 text-outline">search</span>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-blue-700 font-bold border-b-2 border-blue-700 transition-colors" href="products.html">Categories</a>
+<a class="text-slate-600 font-medium hover:text-blue-600 transition-colors" href="products.html?deals=true">Deals</a>
+<a class="text-slate-600 font-medium hover:text-blue-600 transition-colors" href="#" onclick="App.goToAdmin(event)">Admin</a>
+</nav>
+<!-- Actions -->
+<div class="flex items-center gap-5">
+<button class="relative group" onclick="App.showToast('Wishlist feature coming soon!', 'info')">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">favorite</span>
+</button>
+<button class="relative group" onclick="App.showToast('No new notifications.', 'info')">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">notifications</span>
+<span class="absolute -top-1 -right-1 w-4 h-4 bg-secondary-container text-[10px] flex items-center justify-center rounded-full text-on-secondary-container font-bold">2</span>
+</button>
+<button class="relative group flex items-center gap-1" onclick="window.location.href='cart.html'">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">shopping_cart</span>
+<span id="cart-badge" class="absolute -top-1 -right-1 w-4 h-4 bg-secondary-container text-[10px] flex items-center justify-center rounded-full text-on-secondary-container font-bold hidden">0</span>
+<span class="hidden md:block text-sm font-semibold text-on-surface-variant">Cart</span>
+</button>
+<button id="navbar-login-btn" class="flex items-center gap-2 bg-surface-container-high p-1.5 pr-4 rounded-full hover:bg-surface-container-highest transition-colors">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm [font-variation-settings:'FILL'_1]">person</span>
+</div>
+<span class="text-sm font-bold text-on-surface">Login</span>
+</button>
+</div>
+</div>
+</header>
+
+<main class="pt-20 bg-surface min-h-screen">
+  <div class="max-w-3xl mx-auto px-6 py-12">
+    <h1 class="font-headline text-3xl font-extrabold text-on-surface mb-8">Checkout</h1>
+    <div class="bg-surface-container-lowest rounded-xl shadow-sm p-8">
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-headline font-bold text-xl">Shipping Address</h3>
+          <button onclick="Checkout.toggleEdit()" id="edit-addr-btn" class="text-sm text-primary font-semibold flex items-center gap-1 hover:underline">
+            <span class="material-symbols-outlined text-base">add</span> Add New
+          </button>
+        </div>
+
+        <!-- Saved Address Selection -->
+        <div id="address-selection-container" class="mb-4 hidden">
+           <label class="block text-sm font-bold text-on-surface-variant mb-2">Select Saved Address</label>
+           <select title="Select an option" id="saved-address-select" onchange="Checkout.changeAddress()" class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary cursor-pointer">
+           </select>
+        </div>
+
+        <!-- Saved Address Display (shown when address exists) -->
+        <div id="saved-addr-display" class="hidden bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4 relative">
+          <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-primary mt-0.5">location_on</span>
+            <div>
+              <p id="display-name" class="font-bold text-on-surface"></p>
+              <p id="display-addr" class="text-sm text-on-surface-variant mt-0.5"></p>
+              <p id="display-phone" class="text-sm text-primary mt-0.5 font-medium"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- No address warning -->
+        <div id="no-addr-warning" class="hidden bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4">
+          <div class="flex items-center gap-2 text-amber-700 text-sm font-medium">
+            <span class="material-symbols-outlined text-amber-500">warning</span>
+            No saved address found. Please fill in your details below.
+          </div>
+        </div>
+
+        <!-- Editable Form -->
+        <div id="addr-form-fields" class="grid grid-cols-2 gap-4">
+          <input title="Input field" type="text" id="chk-name" placeholder="Full Name" class="col-span-2 w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary">
+          <input title="Input field" type="text" id="chk-address" placeholder="Address Block" class="col-span-2 w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary">
+          <input title="Input field" type="text" id="chk-city" placeholder="City" class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary">
+          <input title="Input field" type="text" id="chk-zip" placeholder="ZIP Code" class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary">
+          <input title="Input field" type="tel" id="chk-phone" placeholder="Phone Number" class="col-span-2 w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary">
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <h3 class="font-headline font-bold text-xl mb-4">Payment Method</h3>
+        <select title="Select an option" id="chk-payment" class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary cursor-pointer">
+          <option value="cod">Cash on Delivery (COD)</option>
+          <option value="card">Pay Online (Card/UPI)</option>
+        </select>
+      </div>
+      <button onclick="Checkout.placeOrder()" class="w-full bg-primary text-on-primary font-bold text-lg py-4 rounded-xl hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-lg shadow-primary/30">Place Order</button>
+    </div>
+  </div>
+</main>
+
+<script>
+const Checkout = {
+  hasSaved: false,
+  isEditing: false,
+  userAddresses: [],
+  selectedAddress: null,
+
+  init() {
+    const userJson = localStorage.getItem('currentUser');
+    if (!userJson) return;
+    const user = JSON.parse(userJson);
+    this.userAddresses = user.addresses || [];
+
+    if (this.userAddresses.length > 0) {
+      this.hasSaved = true;
+      document.getElementById('address-selection-container').classList.remove('hidden');
+      
+      const select = document.getElementById('saved-address-select');
+      select.innerHTML = '';
+      this.userAddresses.forEach((addr, idx) => {
+          select.innerHTML += `<option value="${idx}">${addr.type}: ${addr.addressLine1}, ${addr.city}</option>`;
+      });
+
+      this.selectAddressIndex(0);
+      document.getElementById('addr-form-fields').classList.add('hidden');
+      document.getElementById('edit-addr-btn').classList.remove('hidden');
+    } else {
+      this.isEditing = true;
+      document.getElementById('no-addr-warning').classList.remove('hidden');
+      document.getElementById('addr-form-fields').classList.remove('hidden');
+      document.getElementById('edit-addr-btn').classList.add('hidden');
+    }
+  },
+
+  changeAddress() {
+    const idx = parseInt(document.getElementById('saved-address-select').value);
+    this.selectAddressIndex(idx);
+  },
+
+  selectAddressIndex(idx) {
+    const addr = this.userAddresses[idx];
+    if (!addr) return;
+    
+    this.selectedAddress = addr;
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    const phone = user.phone || addr.phone || '';
+    
+    document.getElementById('saved-addr-display').classList.remove('hidden');
+    document.getElementById('display-name').textContent = user.name || addr.type;
+    document.getElementById('display-addr').textContent = `${addr.addressLine1}, ${addr.city} - ${addr.zip}`;
+    document.getElementById('display-phone').textContent = phone ? '📞 ' + phone : '';
+    
+    // reset form edit state if we clicked dropdown
+    if (this.isEditing) this.toggleEdit();
+  },
+
+  toggleEdit() {
+    const form = document.getElementById('addr-form-fields');
+    const display = document.getElementById('saved-addr-display');
+    const selectContainer = document.getElementById('address-selection-container');
+    const btn = document.getElementById('edit-addr-btn');
+    
+    this.isEditing = !this.isEditing;
+    
+    if (this.isEditing) {
+      form.classList.remove('hidden');
+      if (this.hasSaved) selectContainer.classList.add('hidden');
+      display.classList.add('hidden');
+      btn.innerHTML = '<span class="material-symbols-outlined text-base">close</span> Cancel';
+    } else {
+      form.classList.add('hidden');
+      if (this.hasSaved) selectContainer.classList.remove('hidden');
+      display.classList.remove('hidden');
+      btn.innerHTML = '<span class="material-symbols-outlined text-base">add</span> Add New';
+    }
+  },
+
+  placeOrder() {
+    if (this.isEditing) {
+      // Validate empty form fields
+      const name = document.getElementById('chk-name').value.trim();
+      const line = document.getElementById('chk-address').value.trim();
+      const city = document.getElementById('chk-city').value.trim();
+      const zip = document.getElementById('chk-zip').value.trim();
+      const phone = document.getElementById('chk-phone').value.trim();
+
+      if (!name || !line || !city || !zip) {
+        App.showToast("Please fill all required address fields.", 'error');
+        return;
+      }
+
+      const newAddr = {
+        type: 'Order Address',
+        addressLine1: line,
+        city: city,
+        zip: zip,
+        phone: phone
+      };
+
+      // Save new address to profile
+      const userJson = localStorage.getItem('currentUser');
+      if (userJson) {
+         let user = JSON.parse(userJson);
+         if (!user.addresses) user.addresses = [];
+         
+         const isDuplicate = user.addresses.some(a => a.addressLine1 === line && a.city === city && a.zip === zip);
+         if (!isDuplicate) {
+             user.addresses.push(newAddr);
+             if (phone && !user.phone) user.phone = phone; // Save default phone
+             DB.updateUser(user.id, { addresses: user.addresses, phone: user.phone || phone });
+             localStorage.setItem('currentUser', JSON.stringify(user));
+             App.currentUser = user; 
+         }
+      }
+      this.selectedAddress = newAddr;
+    } else if (!this.hasSaved || !this.selectedAddress) {
+       App.showToast("Please provide a shipping address.", 'error');
+       return;
+    }
+
+    App.placeOrder(this.selectedAddress);
+  }
+};
+document.addEventListener('DOMContentLoaded', () => Checkout.init());
+</script>
+
+<!-- Footer -->
+<footer class="w-full py-12 px-6 border-t border-slate-200 bg-slate-50">
+<div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12">
+<div class="col-span-2">
+<a href="index.html" class="inline-block hover:opacity-80 transition-opacity"><span class="text-xl font-bold text-slate-900 mb-6 block">ShopWithMe</span></a>
+<p class="text-slate-500 text-sm mb-6 max-w-xs">The Digital Curator for modern essentials. Excellence in every delivery, transparency in every transaction.</p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center hover:bg-primary hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-lg">public</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center hover:bg-primary hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-lg">alternate_email</span>
+</a>
+</div>
+</div>
+<div>
+<h4 class="font-headline font-bold text-slate-900 mb-6 text-sm">Company</h4>
+<ul class="space-y-4">
+<li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors" href="#">Sustainability</a></li>
+<li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors" href="#">Press</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-headline font-bold text-slate-900 mb-6 text-sm">Support</h4>
+<ul class="space-y-4">
+<li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors" href="#">Contact</a></li>
+<li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors" href="#">Shipping Info</a></li>
+<li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors" href="#">Returns</a></li>
+<li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors" href="#">FAQ</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-headline font-bold text-slate-900 mb-6 text-sm">Legal</h4>
+<ul class="space-y-4">
+<li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+<li><a class="text-slate-500 text-sm hover:underline hover:text-primary transition-colors" href="#">Security</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-headline font-bold text-slate-900 mb-6 text-sm">Download</h4>
+<div class="flex flex-col gap-3">
+<button class="bg-slate-900 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">smartphone</span>
+<div class="text-left">
+<p class="text-[8px] uppercase">App Store</p>
+<p class="text-xs font-bold leading-tight">Download</p>
+</div>
+</button>
+<button class="bg-slate-900 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">ad_units</span>
+<div class="text-left">
+<p class="text-[8px] uppercase">Play Store</p>
+<p class="text-xs font-bold leading-tight">Get it on</p>
+</div>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto pt-12 mt-12 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="text-slate-500 text-xs">© 2024 ShopWithMe. The Digital Curator.</p>
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 grayscale opacity-50">
+<span class="material-symbols-outlined text-sm">payments</span>
+<span class="material-symbols-outlined text-sm">credit_card</span>
+<span class="material-symbols-outlined text-sm">account_balance_wallet</span>
+</div>
+</div>
+</div>
+</footer>
+<script src="js/db.js"></script>
+<script src="js/app.js"></script>
+</body></html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>ShopWithMe Admin Dashboard</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap"
+    rel="stylesheet" />
+  <!-- Icons -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block"
+    rel="stylesheet" />
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-error": "#ffffff",
+            "tertiary-fixed": "#ffdbcb",
+            "primary-fixed": "#d9e2ff",
+            "on-tertiary": "#ffffff",
+            "on-surface-variant": "#424754",
+            "on-primary": "#ffffff",
+            "tertiary": "#9a4100",
+            "primary-fixed-dim": "#afc6ff",
+            "background": "#f7f9fc",
+            "on-background": "#191c1e",
+            "surface-container-lowest": "#ffffff",
+            "error": "#ba1a1a",
+            "on-tertiary-container": "#fffbff",
+            "on-primary-container": "#fefcff",
+            "secondary-fixed": "#ffdcbd",
+            "primary": "#0056c3",
+            "surface-variant": "#e0e3e6",
+            "secondary": "#8a5100",
+            "inverse-primary": "#afc6ff",
+            "on-tertiary-fixed": "#341100",
+            "surface": "#f7f9fc",
+            "primary-container": "#1f6feb",
+            "on-surface": "#191c1e",
+            "inverse-surface": "#2d3133",
+            "on-secondary": "#ffffff",
+            "inverse-on-surface": "#eff1f4",
+            "surface-tint": "#0059c8",
+            "on-secondary-container": "#643900",
+            "on-primary-fixed": "#001944",
+            "tertiary-container": "#c15300",
+            "surface-bright": "#f7f9fc",
+            "error-container": "#ffdad6",
+            "tertiary-fixed-dim": "#ffb691",
+            "surface-container-high": "#e6e8eb",
+            "on-secondary-fixed-variant": "#693c00",
+            "surface-dim": "#d8dadd",
+            "on-error-container": "#93000a",
+            "secondary-container": "#fe9800",
+            "surface-container": "#eceef1",
+            "surface-container-low": "#f2f4f7",
+            "secondary-fixed-dim": "#ffb86f",
+            "on-secondary-fixed": "#2c1600",
+            "outline": "#727786",
+            "on-primary-fixed-variant": "#004299",
+            "surface-container-highest": "#e0e3e6",
+            "outline-variant": "#c2c6d6",
+            "on-tertiary-fixed-variant": "#783100"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+
+    .glass-header {
+      background: rgba(255, 255, 255, 0.8);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+    }
+
+    .editorial-shadow {
+      box-shadow: 0 20px 40px rgba(25, 28, 30, 0.06);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    h1,
+    h2,
+    h3,
+    .brand-font {
+      font-family: 'Manrope', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-surface text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+  <!-- TopNavBar -->
+  <nav class="fixed top-0 w-full z-50 glass-header border-b border-outline-variant/20">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-12">
+        <a href="index.html" class="inline-block hover:opacity-80 transition-opacity"><span
+            class="text-2xl font-black tracking-tight text-blue-700">ShopWithMe</span></a>
+        <div class="hidden md:flex items-center gap-8">
+          <a class="admin-nav-link text-blue-700 font-bold border-b-2 border-blue-700 transition-colors py-1" href="#"
+            onclick="App.switchAdminTab('dashboard', event)">Dashboard</a>
+          <a class="admin-nav-link text-slate-600 font-medium hover:text-blue-600 transition-colors py-1" href="#"
+            onclick="App.switchAdminTab('products', event)">Products</a>
+          <a class="admin-nav-link text-slate-600 font-medium hover:text-blue-600 transition-colors py-1" href="#"
+            onclick="App.switchAdminTab('orders', event)">Orders</a>
+          <a class="admin-nav-link text-slate-600 font-medium hover:text-blue-600 transition-colors py-1" href="#"
+            onclick="App.switchAdminTab('users', event)">Users</a>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button
+          onclick="App.switchAdminTab('products', {preventDefault:()=>{}}); App.adminCancelEdit(); setTimeout(() => document.querySelector('aside').scrollIntoView({behavior:'smooth'}), 100)"
+          class="hidden lg:flex items-center gap-2 bg-primary text-white px-5 py-2 rounded-full font-bold text-sm shadow-md shadow-primary/20 hover:scale-105 transition-all cursor-pointer">
+          <span class="material-symbols-outlined text-sm">add_circle</span> Add Product
+        </button>
+        <div class="relative hidden sm:block">
+          <input
+            class="bg-surface-container-high border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20 w-64 transition-all"
+            placeholder="Search analytics..." type="text"
+            onkeyup="if(event.key==='Enter') App.showToast('Search module connected', 'info')" />
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg"
+            data-icon="search">search</span>
+        </div>
+        <button class="p-2 text-slate-600 hover:bg-surface-container rounded-full transition-colors relative">
+          <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 bg-secondary-container rounded-full"></span>
+        </button>
+        <button class="p-2 text-slate-600 hover:bg-surface-container rounded-full transition-colors"
+          onclick="App.showToast('Settings portal coming soon', 'info')">
+          <span class="material-symbols-outlined" data-icon="settings">settings</span>
+        </button>
+        <button onclick="App.logout()" title="Logout"
+          class="flex items-center gap-2 bg-error-container/40 text-error px-4 py-2 rounded-full font-bold text-sm hover:bg-error hover:text-white transition-all cursor-pointer">
+          <span class="material-symbols-outlined text-sm">logout</span>
+          Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+  <main class="pt-28 pb-20 px-6 max-w-7xl mx-auto">
+    <div id="admin-tab-dashboard">
+      <!-- Dashboard Header -->
+      <header class="mb-12">
+        <h1 class="text-4xl font-extrabold tracking-tight text-on-surface mb-2">Executive Overview</h1>
+        <p class="text-on-surface-variant font-medium">Welcome back, Admin. Here is what's happening today.</p>
+      </header>
+      <!-- Stat Cards: Bento Grid Style -->
+      <div id="admin-stats-unified" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div
+          class="bg-surface-container-lowest p-8 rounded-xl editorial-shadow group hover:-translate-y-1 transition-transform duration-300">
+          <div class="flex items-start justify-between mb-4">
+            <div class="p-3 bg-primary/10 text-primary rounded-lg">
+              <span class="material-symbols-outlined text-3xl" data-icon="group">group</span>
+            </div>
+            <span class="text-xs font-bold px-2 py-1 bg-green-100 text-green-700 rounded-md">...</span>
+          </div>
+          <p class="text-sm font-semibold text-on-surface-variant uppercase tracking-wider">Total Users</p>
+          <h3 class="text-3xl font-extrabold mt-1">...</h3>
+        </div>
+        <div
+          class="bg-surface-container-lowest p-8 rounded-xl editorial-shadow group hover:-translate-y-1 transition-transform duration-300 border-l-4 border-secondary-container">
+          <div class="flex items-start justify-between mb-4">
+            <div class="p-3 bg-secondary-container/10 text-secondary rounded-lg">
+              <span class="material-symbols-outlined text-3xl" data-icon="shopping_cart">shopping_cart</span>
+            </div>
+            <span class="text-xs font-bold px-2 py-1 bg-green-100 text-green-700 rounded-md">...</span>
+          </div>
+          <p class="text-sm font-semibold text-on-surface-variant uppercase tracking-wider">Total Orders</p>
+          <h3 class="text-3xl font-extrabold mt-1">...</h3>
+        </div>
+        <div
+          class="bg-primary p-8 rounded-xl editorial-shadow text-white group hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden">
+          <div class="relative z-10">
+            <div class="flex items-start justify-between mb-4">
+              <div class="p-3 bg-white/20 rounded-lg backdrop-blur-md">
+                <span class="material-symbols-outlined text-3xl text-white" data-icon="payments">payments</span>
+              </div>
+              <span class="text-xs font-bold px-2 py-1 bg-white/20 text-white rounded-md">Real-time</span>
+            </div>
+            <p class="text-sm font-semibold text-primary-fixed uppercase tracking-wider">Revenue</p>
+            <h3 class="text-3xl font-extrabold mt-1">...</h3>
+          </div>
+          <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <!-- Main Content Area: Recent Orders Table -->
+      <div class="lg:col-span-2 space-y-10">
+        <section id="admin-target-orders">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold">Recent Orders</h2>
+            <button class="text-primary font-semibold flex items-center gap-1 hover:underline">
+              View All <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+            </button>
+          </div>
+          <div class="bg-surface-container-lowest rounded-xl editorial-shadow overflow-hidden">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-surface-container-low border-b border-outline-variant/10">
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Order ID
+                  </th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">User ID</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right">
+                    Amount</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-center">
+                    Status</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right">
+                    Action</th>
+                </tr>
+              </thead>
+              <tbody id="admin-orders-tbody" class="divide-y divide-surface-container">
+                <!-- Filled by JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section id="admin-target-products">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold">Products Inventory</h2>
+          </div>
+          <div class="bg-surface-container-lowest rounded-xl editorial-shadow overflow-hidden">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-surface-container-low border-b border-outline-variant/10">
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Product ID
+                  </th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Name</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right">
+                    Price</th>
+                  <th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right">
+                    Action</th>
+                </tr>
+              </thead>
+              <tbody id="admin-products-tbody" class="divide-y divide-surface-container">
+                <!-- Filled by JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+    <!-- Sidebar Content: Add New Product Form -->
+    <aside class="space-y-8 hidden" id="admin-target-sidebar">
+      <section>
+        <h2 class="text-2xl font-bold mb-6">Add New Product</h2>
+        <div class="bg-surface-container-lowest p-8 rounded-xl editorial-shadow border border-primary/5">
+          <form class="space-y-6" onsubmit="event.preventDefault(); App.adminAddProductUnified();">
+            <div>
+              <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Product
+                Name</label>
+              <input
+                class="w-full bg-surface-container-high border-none rounded-md px-4 py-3 focus:ring-2 focus:ring-primary/20 text-sm transition-all"
+                id="admin-prod-name" placeholder="Enter product name" type="text" />
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Price
+                  (₹)</label>
+                <input
+                  class="w-full bg-surface-container-high border-none rounded-md px-4 py-3 focus:ring-2 focus:ring-primary/20 text-sm transition-all"
+                  id="admin-prod-price" placeholder="0.00" type="number" step="0.01" />
+              </div>
+              <div>
+                <label
+                  class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Category</label>
+                <select id="admin-prod-cat" title="Select product category"
+                  class="w-full bg-surface-container-high border-none rounded-md px-4 py-3 focus:ring-2 focus:ring-primary/20 text-sm transition-all">
+                  <option>Electronics</option>
+                  <option>Fashion</option>
+                  <option>Grocery</option>
+                  <option>Gadgets</option>
+                  <option>Home</option>
+                  <option>Accessories</option>
+                  <option>Beauty</option>
+                </select>
+              </div>
+            </div>
+            <!-- Image Upload Section -->
+            <div>
+              <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Product
+                Image</label>
+              <!-- Upload Button Area -->
+              <div id="admin-img-drop" onclick="document.getElementById('admin-prod-img-file').click()"
+                class="w-full border-2 border-dashed border-outline-variant rounded-lg p-4 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-primary hover:bg-primary/5 transition-all min-h-[120px]">
+                <img id="admin-img-preview" src="" alt="Preview"
+                  class="hidden w-full h-32 object-contain rounded-md mb-2" />
+                <span id="admin-img-placeholder" class="flex flex-col items-center gap-1 text-on-surface-variant">
+                  <span class="material-symbols-outlined text-3xl">add_photo_alternate</span>
+                  <span class="text-xs font-semibold">Click to choose image from your device</span>
+                  <span class="text-[10px] text-outline">PNG, JPG, WEBP supported</span>
+                </span>
+              </div>
+              <input type="file" id="admin-prod-img-file" accept="image/*" title="Upload product image"
+                placeholder="Upload product image" class="hidden" onchange="App.adminPreviewImage(this)" />
+              <!-- URL fallback -->
+              <input type="url" id="admin-prod-img"
+                class="w-full bg-surface-container-high border-none rounded-md px-4 py-2 focus:ring-2 focus:ring-primary/20 text-xs transition-all mt-2"
+                placeholder="Or paste image URL here..." />
+            </div>
+            <div>
+              <label
+                class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Description</label>
+              <textarea
+                class="w-full bg-surface-container-high border-none rounded-md px-4 py-3 focus:ring-2 focus:ring-primary/20 text-sm transition-all"
+                id="admin-prod-desc" placeholder="Product details..." rows="4"></textarea>
+            </div>
+            <div
+              class="flex items-center gap-3 bg-surface-container-high/50 p-4 rounded-lg border border-outline-variant/20 cursor-pointer"
+              onclick="document.getElementById('admin-prod-featured').click()">
+              <input title="Input field" placeholder=" " type="checkbox" id="admin-prod-featured"
+                class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary transition-all cursor-pointer"
+                onclick="event.stopPropagation()">
+              <label for="admin-prod-featured"
+                class="text-sm font-bold text-on-surface cursor-pointer select-none flex-1">Feature on Home
+                Screen</label>
+              <span class="material-symbols-outlined text-outline-variant text-sm">star</span>
+            </div>
+            <div class="flex gap-4">
+              <button id="admin-prod-submit-btn"
+                class="flex-1 py-4 bg-gradient-to-br from-primary to-primary-container text-white font-bold rounded-md shadow-lg shadow-primary/20 hover:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                type="submit">
+                <span id="admin-prod-submit-icon" class="material-symbols-outlined text-xl" data-icon="add">add</span>
+                <span id="admin-prod-submit-text">Add Product</span>
+              </button>
+              <button id="admin-prod-cancel-btn"
+                class="hidden flex-1 py-4 bg-surface-container-high text-on-surface-variant font-bold rounded-md hover:bg-surface-variant transition-all flex items-center justify-center gap-2"
+                type="button" onclick="App.adminCancelEdit()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section>
+        <div class="bg-secondary-container/5 rounded-xl p-6 border border-secondary-container/10">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="material-symbols-outlined text-secondary" data-icon="tips_and_updates">tips_and_updates</span>
+            <h4 class="font-bold text-secondary">Quick Pro-Tip</h4>
+          </div>
+          <p class="text-sm text-on-secondary-container leading-relaxed">
+            Ensure your product descriptions are SEO-optimized to increase discoverability in search results. Use
+            high-resolution images for better conversion.
+          </p>
+        </div>
+      </section>
+    </aside>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="bg-slate-50 border-t border-slate-200">
+    <div class="max-w-7xl mx-auto py-12 px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
+        <div class="col-span-2">
+          <span class="text-xl font-bold text-slate-900 mb-4 block">ShopWithMe</span>
+          <p class="text-sm text-slate-500 max-w-xs">The ultimate commerce engine for modern digital curators and
+            professional administrators.</p>
+        </div>
+        <div class="flex flex-col gap-4">
+          <span class="text-xs font-bold uppercase tracking-widest text-slate-900">Platform</span>
+          <a class="text-sm text-slate-500 hover:underline decoration-orange-500 underline-offset-4"
+            href="#">Dashboard</a>
+          <a class="text-sm text-slate-500 hover:underline decoration-orange-500 underline-offset-4"
+            href="#">Products</a>
+        </div>
+        <div class="flex flex-col gap-4">
+          <span class="text-xs font-bold uppercase tracking-widest text-slate-900">Resources</span>
+          <a class="text-sm text-slate-500 hover:underline decoration-orange-500 underline-offset-4" href="#">Shipping
+            Info</a>
+          <a class="text-sm text-slate-500 hover:underline decoration-orange-500 underline-offset-4"
+            href="#">Returns</a>
+        </div>
+        <div class="flex flex-col gap-4">
+          <span class="text-xs font-bold uppercase tracking-widest text-slate-900">Support</span>
+          <a class="text-sm text-slate-500 hover:underline decoration-orange-500 underline-offset-4"
+            href="#">Contact</a>
+          <a class="text-sm text-slate-500 hover:underline decoration-orange-500 underline-offset-4" href="#">Help
+            Center</a>
+        </div>
+        <div class="flex flex-col gap-4">
+          <span class="text-xs font-bold uppercase tracking-widest text-slate-900">Legal</span>
+          <a class="text-sm text-slate-500 hover:underline decoration-orange-500 underline-offset-4" href="#">Privacy
+            Policy</a>
+          <a class="text-sm text-slate-500 hover:underline decoration-orange-500 underline-offset-4" href="#">Terms of
+            Service</a>
+        </div>
+      </div>
+      <div class="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-slate-200">
+        <p class="text-sm text-slate-500 mb-4 md:mb-0">© 2026 ShopWithMe. The Digital Curator.</p>
+        <div class="flex gap-6">
+          <span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary transition-colors"
+            data-icon="brand_awareness">brand_awareness</span>
+          <span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary transition-colors"
+            data-icon="public">public</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="js/db.js?v=3"></script>
+  <script src="js/app.js?v=3"></script>
+</body>
+
+</html>
